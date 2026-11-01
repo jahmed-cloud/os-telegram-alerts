@@ -1,0 +1,9 @@
+<acl>
+    <page-services-telegramalerts>
+        <name>Services: Telegram Alerts</name>
+        <patterns>
+            <pattern>ui/telegramalerts/*</pattern>
+            <pattern>api/telegramalerts/*</pattern>
+        </patterns>
+    </page-services-telegramalerts>
+</acl>

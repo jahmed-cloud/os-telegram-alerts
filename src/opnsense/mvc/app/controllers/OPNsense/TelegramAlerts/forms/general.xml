@@ -1,0 +1,160 @@
+<form>
+    <field>
+        <type>header</type>
+        <label>Connection</label>
+    </field>
+    <field>
+        <id>telegramalerts.general.enabled</id>
+        <label>Enable alerts</label>
+        <type>checkbox</type>
+        <help>Master switch. Disabling removes all Telegram checks from Monit and disables the daily summary job.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.token</id>
+        <label>Bot token</label>
+        <type>password</type>
+        <help>From @BotFather (/newbot). Stored in config.xml, so it is included in configuration backups.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.chatid</id>
+        <label>Chat ID</label>
+        <type>text</type>
+        <help>Message your bot once, then read chat.id from https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.prefix</id>
+        <label>Message prefix</label>
+        <type>text</type>
+        <help>Shown at the start of every alert.</help>
+    </field>
+    <field>
+        <type>header</type>
+        <label>System health</label>
+    </field>
+    <field>
+        <id>telegramalerts.general.resources</id>
+        <label>CPU, memory and disk</label>
+        <type>checkbox</type>
+        <help>CPU over 90% or memory over 85% for 5 minutes; root disk over 80% full.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.temperature</id>
+        <label>CPU temperature</label>
+        <type>checkbox</type>
+        <help>Alert when the CPU reaches the limit below.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.tempmax</id>
+        <label>CPU temperature limit (°C)</label>
+        <type>text</type>
+        <help></help>
+    </field>
+    <field>
+        <id>telegramalerts.general.smart</id>
+        <label>Disk SMART health</label>
+        <type>checkbox</type>
+        <help>Alert when a disk fails its SMART health check.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.updates</id>
+        <label>Firmware updates</label>
+        <type>checkbox</type>
+        <help>Checks the repository every 6 hours, one alert when updates appear.</help>
+    </field>
+    <field>
+        <type>header</type>
+        <label>Internet</label>
+    </field>
+    <field>
+        <id>telegramalerts.general.netwatch</id>
+        <label>Boot and outage notices</label>
+        <type>checkbox</type>
+        <help>Router started (also reveals power loss) and internet back online with outage window. Outages are reported after recovery.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.gatewaydown</id>
+        <label>Gateway down</label>
+        <type>checkbox</type>
+        <help>WAN gateway monitor reports down for 2 minutes (delivered only if the internet still works through another path).</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.wanquality</id>
+        <label>WAN quality degraded</label>
+        <type>checkbox</type>
+        <help>Latency or packet loss above the limits below for 5 minutes.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.latencymax</id>
+        <label>Latency limit (ms)</label>
+        <type>text</type>
+        <help></help>
+    </field>
+    <field>
+        <id>telegramalerts.general.lossmax</id>
+        <label>Packet loss limit (%)</label>
+        <type>text</type>
+        <help></help>
+    </field>
+    <field>
+        <type>header</type>
+        <label>Security</label>
+    </field>
+    <field>
+        <id>telegramalerts.general.logins</id>
+        <label>Admin logins</label>
+        <type>checkbox</type>
+        <help>Successful web GUI and SSH logins, and summaries of failed attempts.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.configchange</id>
+        <label>Configuration changes</label>
+        <type>checkbox</type>
+        <help>Who changed what, at most once per minute.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.newdevices</id>
+        <label>New devices</label>
+        <type>checkbox</type>
+        <help>First DHCP lease for a MAC address on any network.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.ids</id>
+        <label>High-severity IDS alerts</label>
+        <type>checkbox</type>
+        <help>Summary of new Suricata severity-1 alerts.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.wireguard</id>
+        <label>WireGuard connects</label>
+        <type>checkbox</type>
+        <help>Peer connected / disconnected, with endpoint IP.</help>
+    </field>
+    <field>
+        <type>header</type>
+        <label>Reports and backup</label>
+    </field>
+    <field>
+        <id>telegramalerts.general.daily</id>
+        <label>Daily summary</label>
+        <type>checkbox</type>
+        <help>One message per day: uptime, WAN quality, outages, DNS queries, IDS hits, new devices, VPN peers, CPU/RAM/disk, firmware.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.dailyhour</id>
+        <label>Daily summary hour (0-23)</label>
+        <type>text</type>
+        <help>Local time.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.backup</id>
+        <label>Encrypted config backup</label>
+        <type>checkbox</type>
+        <help>After configuration changes (at most every 10 minutes) send config.xml encrypted with AES-256 to the chat. The file contains every secret on this firewall.</help>
+    </field>
+    <field>
+        <id>telegramalerts.general.backuppass</id>
+        <label>Backup encryption password</label>
+        <type>password</type>
+        <help>16+ characters, keep it in your password manager. Decrypt: openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -md sha256 -in FILE.enc -out config.xml</help>
+    </field>
+</form>

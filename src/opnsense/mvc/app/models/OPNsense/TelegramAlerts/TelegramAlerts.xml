@@ -1,0 +1,111 @@
+<model>
+    <mount>//OPNsense/TelegramAlerts</mount>
+    <version>1.3.0</version>
+    <description>Telegram alert notifications</description>
+    <items>
+        <general>
+            <enabled type="BooleanField">
+                <Default>0</Default>
+                <Required>Y</Required>
+            </enabled>
+            <token type="TextField">
+                <Mask>/^[0-9]{5,15}:[A-Za-z0-9_-]{30,50}$/</Mask>
+                <ValidationMessage>Invalid bot token format (expected 123456789:AA...).</ValidationMessage>
+            </token>
+            <chatid type="TextField">
+                <Mask>/^-?[0-9]{3,20}$/</Mask>
+                <ValidationMessage>Chat ID must be numeric (groups start with -).</ValidationMessage>
+            </chatid>
+            <prefix type="TextField">
+                <Default>[OPNsense]</Default>
+                <Mask>/^[A-Za-z0-9 _.:\[\]-]{0,32}$/</Mask>
+                <ValidationMessage>Prefix: max 32 chars, letters, digits, space and _ . : [ ] - only.</ValidationMessage>
+            </prefix>
+            <tempmax type="IntegerField">
+                <Default>80</Default>
+                <MinimumValue>50</MinimumValue>
+                <MaximumValue>105</MaximumValue>
+                <Required>Y</Required>
+                <ValidationMessage>Temperature threshold must be between 50 and 105.</ValidationMessage>
+            </tempmax>
+            <netwatch type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </netwatch>
+            <updates type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </updates>
+            <logins type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </logins>
+            <configchange type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </configchange>
+            <newdevices type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </newdevices>
+            <ids type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </ids>
+            <wireguard type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </wireguard>
+            <latencymax type="IntegerField">
+                <Default>100</Default>
+                <MinimumValue>10</MinimumValue>
+                <MaximumValue>2000</MaximumValue>
+                <Required>Y</Required>
+            </latencymax>
+            <lossmax type="IntegerField">
+                <Default>5</Default>
+                <MinimumValue>1</MinimumValue>
+                <MaximumValue>100</MaximumValue>
+                <Required>Y</Required>
+            </lossmax>
+            <backup type="BooleanField">
+                <Default>0</Default>
+                <Required>Y</Required>
+            </backup>
+            <backuppass type="TextField">
+                <Mask>/^([^"$`\\]{16,128})?$/</Mask>
+                <ValidationMessage>Backup password: 16-128 characters, no quotes, $, ` or backslash.</ValidationMessage>
+            </backuppass>
+            <resources type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </resources>
+            <gatewaydown type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </gatewaydown>
+            <temperature type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </temperature>
+            <smart type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </smart>
+            <wanquality type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </wanquality>
+            <daily type="BooleanField">
+                <Default>1</Default>
+                <Required>Y</Required>
+            </daily>
+            <dailyhour type="IntegerField">
+                <Default>8</Default>
+                <MinimumValue>0</MinimumValue>
+                <MaximumValue>23</MaximumValue>
+                <Required>Y</Required>
+            </dailyhour>
+        </general>
+    </items>
+</model>

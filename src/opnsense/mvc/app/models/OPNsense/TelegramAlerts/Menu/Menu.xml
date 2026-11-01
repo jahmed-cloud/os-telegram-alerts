@@ -1,0 +1,5 @@
+<menu>
+    <Services>
+        <TelegramAlerts VisibleName="Telegram Alerts" url="/ui/telegramalerts/" cssClass="fa fa-paper-plane fa-fw"/>
+    </Services>
+</menu>

@@ -1,0 +1,48 @@
+<metadata>
+    <tgnetworkhealth>
+        <filename>TgNetworkHealth.js</filename>
+        <endpoints>
+            <endpoint>/api/telegramalerts/dashboard/summary</endpoint>
+        </endpoints>
+        <translations>
+            <title>Network Health</title>
+            <internet>Internet</internet>
+            <wanip>WAN IP</wanip>
+            <latency>Latency</latency>
+            <loss>Packet loss</loss>
+            <outages>Outages (24h)</outages>
+            <lastoutage>Last outage</lastoutage>
+            <uptime>Uptime</uptime>
+            <temp>CPU temperature</temp>
+        </translations>
+    </tgnetworkhealth>
+    <tgclients>
+        <filename>TgClients.js</filename>
+        <endpoints>
+            <endpoint>/api/telegramalerts/dashboard/summary</endpoint>
+        </endpoints>
+        <translations>
+            <title>Clients</title>
+            <online>Online now</online>
+            <leases>DHCP leases</leases>
+            <vpn>WireGuard</vpn>
+            <recent>Newest devices</recent>
+            <none>none yet</none>
+        </translations>
+    </tgclients>
+    <tgsecurity>
+        <filename>TgSecurity.js</filename>
+        <endpoints>
+            <endpoint>/api/telegramalerts/dashboard/summary</endpoint>
+        </endpoints>
+        <translations>
+            <title>Security and Alerts</title>
+            <firehol>Attackers blocked</firehol>
+            <ids>IDS alerts today</ids>
+            <failed>Failed logins today</failed>
+            <change>Last config change</change>
+            <checks>Monit checks</checks>
+            <lastalert>Last Telegram alert</lastalert>
+        </translations>
+    </tgsecurity>
+</metadata>
