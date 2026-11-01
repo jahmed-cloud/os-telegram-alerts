@@ -1,4 +1,3 @@
-import BaseTableWidget from "./BaseTableWidget.js";
 
 export default class TgClients extends BaseTableWidget {
     constructor() {

@@ -100,6 +100,10 @@ monit summary                        # state of the checks
   Services > Monit > Log File.
 - **Alerts stopped after a firmware upgrade:** a major upgrade can remove files
   that are not pkg-managed. Deploy again; settings are kept.
+- **Dashboard blank after a firmware update:** open Lobby > Dashboard after every
+  update. The widgets are not pkg-managed and can be removed or broken by a new
+  widget API. Deploy again; `sh tests/check-widgets.sh` must pass first (widget
+  JS must not `import`: the base classes are globals).
 
 ## Uninstall
 

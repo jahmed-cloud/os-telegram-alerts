@@ -1,4 +1,3 @@
-import BaseTableWidget from "./BaseTableWidget.js";
 
 export default class TgNetworkHealth extends BaseTableWidget {
     constructor() {

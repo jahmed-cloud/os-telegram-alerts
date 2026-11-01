@@ -18,6 +18,10 @@ done
 for f in $(find "$SRC" -name '*.php'); do
     php -l "$f" >/dev/null || { echo "Syntax error in $f, nothing installed"; exit 1; }
 done
+# An import line in a widget blanks the whole dashboard (base classes are globals).
+if grep -lE '^[[:space:]]*import[[:space:]({*"'"'"']' "$SRC"/www/js/widgets/*.js; then
+    echo "Widget files above use import, nothing installed"; exit 1
+fi
 
 echo "Copying files..."
 cp -R "$SRC/mvc/"     "$DST/mvc/"
