@@ -52,7 +52,7 @@ if [ "${TG_CONFIGCHANGE:-1}" = "1" ] && [ -f /conf/config.xml ]; then
         what=$(printf '%s\n' "$rev" | sed -n 's:.*<description>\(.*\)</description>.*:\1:p' | head -1)
         notify "config" "Configuration changed" "By: ${who:-unknown}
 ${what:-no description}"
-        touch "$STATE/backup.pending"
+        [ "${TG_BACKUP:-0}" = "1" ] && touch "$STATE/backup.pending"
     fi
 fi
 
@@ -63,7 +63,8 @@ if [ "${TG_NEWDEVICES:-1}" = "1" ]; then
         known="$STATE/known_macs"
         first=0; [ -f "$known" ] || { first=1; : > "$known"; }
         while read -r exp mac ip host rest; do
-            [ -n "$mac" ] || continue
+            # IPv4 leases only: skips the "duid" line and DHCPv6 leases (IAID in field 2)
+            echo "$mac" | grep -qiE '^([0-9a-f]{2}:){5}[0-9a-f]{2}$' || continue
             if ! grep -qix "$mac" "$known"; then
                 echo "$mac" >> "$known"
                 [ "$first" = "1" ] && continue

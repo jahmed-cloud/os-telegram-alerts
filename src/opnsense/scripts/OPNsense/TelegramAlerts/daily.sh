@@ -29,8 +29,10 @@ else dns="${q_now} (resolver restarted)"; fi
 
 ids=0
 if [ -f /var/log/suricata/eve.json ]; then
-    d1=$(date -r "$since" '+%Y-%m-%dT'); d2=$(date '+%Y-%m-%dT')
-    ids=$(grep '"event_type":"alert"' /var/log/suricata/eve.json | grep -cE "\"timestamp\":\"(${d1}|${d2})")
+    # Alerts since the previous report (eve timestamps are local time, so they compare as strings)
+    ts=$(date -r "$since" '+%Y-%m-%dT%H:%M:%S')
+    ids=$(grep '"event_type":"alert"' /var/log/suricata/eve.json \
+        | sed -n 's/.*"timestamp":"\([0-9T:-]\{19\}\).*/\1/p' | awk -v s="$ts" '$0 >= s' | wc -l | tr -d ' ')
 fi
 
 macs_now=$(wc -l < "$STATE/known_macs" 2>/dev/null | tr -d ' '); macs_prev=$(cat "$STATE/macs.count" 2>/dev/null || echo "$macs_now")

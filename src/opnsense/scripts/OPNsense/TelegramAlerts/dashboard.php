@@ -172,8 +172,6 @@ for ($i = 0; $i < count($tables); $i++) {
 $today = date('Y-m-d');
 $ids = 0;
 if (is_readable('/var/log/suricata/eve.json')) {
-    $r = run('grep -c ' . escapeshellarg('"timestamp":"' . $today) . ' /var/log/suricata/eve.json');
-    $all = (int)($r[0] ?? 0);
     $r2 = run('grep ' . escapeshellarg('"timestamp":"' . $today) . ' /var/log/suricata/eve.json | grep -c \'"event_type":"alert"\'');
     $ids = (int)($r2[0] ?? 0);
 }

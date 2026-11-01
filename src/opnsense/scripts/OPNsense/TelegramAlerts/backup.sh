@@ -23,7 +23,8 @@ if ! TG_BACKUPPASS="$TG_BACKUPPASS" openssl enc -aes-256-cbc -pbkdf2 -iter 20000
     echo "encryption failed"; rm -f "$out"; exit 0
 fi
 sha=$(sha256 -q /conf/config.xml)
-resp=$(curl -s -m 60 "https://api.telegram.org/bot${TG_TOKEN}/sendDocument" \
+# URL on stdin keeps the bot token out of ps
+resp=$(printf 'url = "https://api.telegram.org/bot%s/sendDocument"\n' "$TG_TOKEN" | curl -s -m 60 -K - \
     -F "chat_id=${TG_CHAT}" -F "document=@${out}" \
     -F "caption=${TG_PREFIX} ${host} config backup $(date '+%F %T %Z') (AES-256, sha256 of plaintext ${sha%${sha#????????????}})" 2>&1)
 rm -f "$out"

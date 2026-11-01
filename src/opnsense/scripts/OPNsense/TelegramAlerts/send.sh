@@ -28,6 +28,9 @@ HOST=$(hostname)
 SVC="${MONIT_SERVICE:-unknown}"
 EVT="${MONIT_EVENT:-}"
 DESC="${MONIT_DESCRIPTION:-}"
+# Telegram rejects messages over 4096 characters
+[ ${#DESC} -gt 3500 ] && DESC="$(printf '%s' "$DESC" | head -c 3500)
+... (truncated)"
 
 # Friendly names for Monit services
 case "$SVC" in
@@ -69,13 +72,16 @@ MSG="<b>${TAG}</b>  |  <b>$(esc "$TITLE")</b>
 MSG="${MSG}
 <i>${NOW}</i>"
 
+# The URL (with the bot token) goes to curl on stdin so it never shows up in ps.
+api_url() { printf 'url = "https://api.telegram.org/bot%s/%s"\n' "$TG_TOKEN" "$1"; }
+
 post() {  # $1 text, $2 parse mode (optional)
     if [ -n "$2" ]; then
-        curl -s -m 15 "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+        api_url sendMessage | curl -s -m 15 -K - \
             --data-urlencode "chat_id=${TG_CHAT}" --data-urlencode "parse_mode=$2" \
             --data-urlencode "disable_web_page_preview=true" --data-urlencode "text=$1" 2>&1
     else
-        curl -s -m 15 "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+        api_url sendMessage | curl -s -m 15 -K - \
             --data-urlencode "chat_id=${TG_CHAT}" --data-urlencode "text=$1" 2>&1
     fi
 }

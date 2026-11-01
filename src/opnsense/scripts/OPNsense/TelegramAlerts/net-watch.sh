@@ -33,11 +33,17 @@ if [ "$(cat "$STATE/boot" 2>/dev/null)" != "$boot" ]; then
     notify "Router started" "Booted at $(date -r "$boot" '+%F %T %Z'). Check for a power loss or an unplanned reboot if you did not restart it."
 fi
 
+# Two failed checks in a row count as an outage, so a single lost ping is not reported.
 prev=$(cat "$STATE/wan" 2>/dev/null || echo up)
-if [ "$online" = "0" ] && [ "$prev" = "up" ]; then
-    echo down > "$STATE/wan"
-    echo "$now" > "$STATE/down_since"
-elif [ "$online" = "1" ] && [ "$prev" = "down" ]; then
+if [ "$online" = "0" ]; then
+    fails=$(( $(cat "$STATE/wan_fails" 2>/dev/null || echo 0) + 1 ))
+    echo "$fails" > "$STATE/wan_fails"
+    [ "$fails" = "1" ] && echo "$now" > "$STATE/down_since"
+    [ "$fails" -ge 2 ] && [ "$prev" = "up" ] && echo down > "$STATE/wan"
+else
+    rm -f "$STATE/wan_fails"
+fi
+if [ "$online" = "1" ] && [ "$prev" = "down" ]; then
     since=$(cat "$STATE/down_since" 2>/dev/null || echo "$now")
     mins=$(( (now - since) / 60 ))
     echo up > "$STATE/wan"
@@ -55,5 +61,5 @@ if [ "$online" = "1" ] && [ -d "$STATE/queue" ]; then
     done
 fi
 
-[ "$online" = "1" ] && echo "internet up" || echo "internet down since $(date -r "$(cat "$STATE/down_since")" '+%T')"
+[ "$online" = "1" ] && echo "internet up" || echo "internet down since $(date -r "$(cat "$STATE/down_since" 2>/dev/null || echo "$now")" '+%T')"
 exit 0
